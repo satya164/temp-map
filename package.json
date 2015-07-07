@@ -1,0 +1,27 @@
+{
+  "name": "temp-map",
+  "version": "0.1.0",
+  "description": "Store keys and values in a hash map temporarily",
+  "main": "src/temp-map.js",
+  "scripts": {
+    "test": "node_modules/.bin/mocha test/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/satya164/temp-map.git"
+  },
+  "keywords": [
+    "hashmap",
+    "map",
+    "temporary"
+  ],
+  "author": "Satyajit Sahoo <satyajit.happy@gmail.com> (https://github.com/satya164/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/satya164/temp-map/issues"
+  },
+  "homepage": "https://github.com/satya164/temp-map#readme",
+  "devDependencies": {
+    "mocha": "latest"
+  }
+}
