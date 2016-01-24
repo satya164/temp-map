@@ -1,3 +1,4 @@
+import 'babel-core/register';
 import test from 'ava';
 import TempMap from '../src/temp-map';
 

@@ -24,6 +24,8 @@
   "homepage": "https://github.com/satya164/temp-map#readme",
   "devDependencies": {
     "ava": "^0.10.0",
+    "babel-core": "^6.4.5",
+    "babel-preset-es2015": "^6.3.13",
     "eslint": "^1.10.3"
   }
 }
