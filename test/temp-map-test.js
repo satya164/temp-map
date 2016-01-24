@@ -76,3 +76,18 @@ test.cb('should not expire value before time', t => {
         t.end();
     }, 10);
 });
+
+test('should be able to iterate', t => {
+    t.plan(2);
+
+    const map = new TempMap(1);
+    const key = 1;
+    const value = 'something';
+
+    map.set(key, value);
+
+    for (const kv of map) {
+        t.same(kv[0], key);
+        t.same(kv[1], value);
+    }
+});

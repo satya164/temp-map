@@ -1,6 +1,6 @@
 export default class TempMap {
     constructor(expireTime) {
-        // Throw error if not expireTime is not number
+        // Throw error if expireTime is not number
         if (typeof expireTime !== 'number') {
             throw new TypeError('Invalid value used as expire time');
         }
@@ -72,5 +72,11 @@ export default class TempMap {
         }
 
         return false;
+    }
+
+    *[Symbol.iterator]() {
+        for (let i = 0, l = this._entries.length; i < l; i++) {
+            yield this._entries[i];
+        }
     }
 }
