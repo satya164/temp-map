@@ -77,6 +77,15 @@ test.cb('should not expire value before time', t => {
     }, 10);
 });
 
+test('should return correct size', t => {
+    const map = new TempMap(1);
+
+    map.set({ a: 'b' }, 'hey');
+    map.set([ 3 ], null);
+
+    t.same(map.size(), 2);
+});
+
 test('should be able to iterate', t => {
     t.plan(2);
 

@@ -74,6 +74,10 @@ export default class TempMap {
         return false;
     }
 
+    size() {
+        return this._entries.length;
+    }
+
     *[Symbol.iterator]() {
         for (let i = 0, l = this._entries.length; i < l; i++) {
             yield this._entries[i];
