@@ -9,11 +9,13 @@ export default class TempMap {
         this._entries = [];
     }
 
-    get(key) {
-        let item;
+    size() {
+        return this._entries.length;
+    }
 
+    get(key) {
         for (let i = 0, l = this._entries.length; i < l; i++) {
-            item = this._entries[i];
+            const item = this._entries[i];
 
             if (item[0] === key) {
                 return item[1];
@@ -22,12 +24,10 @@ export default class TempMap {
     }
 
     set(key, value) {
-        let item, timeout;
-
-        timeout = setTimeout(() => this.delete(key), this._expireTime);
+        const timeout = setTimeout(() => this.delete(key), this._expireTime);
 
         for (let i = 0, l = this._entries.length; i < l; i++) {
-            item = this._entries[i];
+            const item = this._entries[i];
 
             if (item[0] === key) {
                 if (item[2]) {
@@ -42,13 +42,13 @@ export default class TempMap {
         }
 
         this._entries.push([ key, value, timeout ]);
+
+        return this;
     }
 
     has(key) {
-        let item;
-
         for (let i = 0, l = this._entries.length; i < l; i++) {
-            item = this._entries[i];
+            const item = this._entries[i];
 
             if (item[0] === key) {
                 return true;
@@ -59,10 +59,8 @@ export default class TempMap {
     }
 
     delete(key) {
-        let item;
-
         for (let i = 0, l = this._entries.length; i < l; i++) {
-            item = this._entries[i];
+            const item = this._entries[i];
 
             if (item[0] === key) {
                 this._entries.splice(i, 1);
@@ -72,10 +70,6 @@ export default class TempMap {
         }
 
         return false;
-    }
-
-    size() {
-        return this._entries.length;
     }
 
     *[Symbol.iterator]() {
