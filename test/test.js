@@ -1,84 +1,77 @@
-/* eslint-env mocha */
+import test from 'ava';
+import TempMap from '../src/temp-map';
 
-"use strict";
+test('should not create without time', t => {
+    t.throws(() => {
+        new TempMap(); // eslint-disable-line no-new
+    }, /Invalid value used as expire time/);
+});
 
-var TempMap = require("../src/temp-map.js"),
-	assert = require("assert");
+test('should set value', t => {
+    const map = new TempMap(50);
+    const key = { a: 'b' };
+    const value = [ 1, 2, 3 ];
 
-describe("TempMap test", function() {
-	it("should not create without time", function() {
-		assert.throws(function() {
-			/* eslint-disable no-new */
-			new TempMap();
-		}, /Invalid value used as expire time/);
-	});
+    map.set(key, value);
 
-	it("should set value", function() {
-		var map = new TempMap(50),
-			key = { a: "b" },
-			value = [ 1, 2, 3 ];
+    t.ok(map.has(key));
+});
 
-		map.set(key, value);
+test('should add key only once', t => {
+    const map = new TempMap(50);
+    const key = { a: 'b' };
+    const value = [ 1, 2, 3 ];
 
-		assert.equal(map.has(key), true);
-	});
+    map.set(key, value);
+    map.set(key, value);
+    map.delete(key);
 
-	it("should add key only once", function() {
-		var map = new TempMap(50),
-			key = { a: "b" },
-			value = [ 1, 2, 3 ];
+    t.notOk(map.has(key));
+});
 
-		map.set(key, value);
-		map.set(key, value);
-		map.delete(key);
+test('should get value', t => {
+    const map = new TempMap(10);
+    const key = { a: 'b' };
+    const value = [ 1, 2, 3 ];
 
-		assert.equal(map.has(key), false);
-	});
+    map.set(key, value);
 
-	it("should get value", function() {
-		var map = new TempMap(10),
-			key = { a: "b" },
-			value = [ 1, 2, 3 ];
+    t.same(map.get(key), value);
+});
 
-		map.set(key, value);
+test('should delete value', t => {
+    const map = new TempMap(10);
+    const key = { a: 'b' };
+    const value = [ 1, 2, 3 ];
 
-		assert.equal(map.get(key), value);
-	});
+    map.set(key, value);
+    map.delete(key);
 
-	it("should delete value", function() {
-		var map = new TempMap(10),
-			key = { a: "b" },
-			value = [ 1, 2, 3 ];
+    t.notOk(map.has(key));
+});
 
-		map.set(key, value);
-		map.delete(key);
+test.cb('should expire value', t => {
+    const map = new TempMap(10);
+    const key = { a: 'b' };
+    const value = [ 1, 2, 3 ];
 
-		assert.equal(map.has(key), false);
-	});
+    map.set(key, value);
 
-	it("should expire value", function(done) {
-		var map = new TempMap(10),
-			key = { a: "b" },
-			value = [ 1, 2, 3 ];
+    setTimeout(() => {
+        t.notOk(map.has(key));
+        t.end();
+    }, 20);
+});
 
-		map.set(key, value);
+test.cb('should not expire value before time', t => {
+    const map = new TempMap(50);
+    const key = { a: 'b' };
+    const value = [ 1, 2, 3 ];
 
-		setTimeout(function() {
-			assert.equal(map.has(key), false);
-			done();
-		}, 20);
-	});
+    map.set(key, value);
 
-	it("should not expire value before time", function(done) {
-		var map = new TempMap(50),
-			key = { a: "b" },
-			value = [ 1, 2, 3 ];
-
-		map.set(key, value);
-
-		setTimeout(function() {
-			assert.equal(map.has(key), true);
-			done();
-		}, 10);
-	});
+    setTimeout(() => {
+        t.ok(map.has(key));
+        t.end();
+    }, 10);
 });
