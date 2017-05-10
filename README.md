@@ -1,5 +1,7 @@
 # temp-map
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/satya164/temp-map.svg)](https://greenkeeper.io/)
+
 Store keys and values in a hash map temporarily.
 
 [![Build status](https://travis-ci.org/satya164/temp-map.svg?branch=master)](https://travis-ci.org/satya164/temp-map)
